@@ -1,0 +1,553 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>关于帧间距 IFG技术的讨论 - Guixue - 博客频道 - CSDN.NET</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="1.什么是 IFG？（What）IFG(InterframeGap),帧间距，以太网相邻两帧之间的时间断；以太网发送方式是一个帧一个帧发送的，帧与帧之间需要间隙，即帧间距IFG也可称其为IPG (Interpacket Gap)。IFG指的是一段时间，不是距离，单位通常用微秒（μs）或纳秒（ns）。如下图所示：&lt;span style=font-family:宋体;mso-as">
+<script src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ga.js" async="" type="text/javascript"></script><script src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ad.js"></script>
+<link rel="Stylesheet" type="text/css" href="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/style.css">
+<link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/oncoding/rss/list">
+<link rel="shortcut icon" href="http://blog.csdn.net/favicon.ico">
+<link type="text/css" rel="stylesheet" href="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/default.css">
+<link href="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/style_002.css" rel="stylesheet" type="text/css"></head>
+<body>
+<script src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/pub_topnav_2011.js" type="text/javascript"></script><link rel="stylesheet" type="text/css" href="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/navtop_2012.css">
+<div class="nav_top_2011">
+<p><span style="color:red;">您还未登录！</span>|<a href="https://passport.csdn.net/account/login" target="_top">登录</a>|<a href="https://passport.csdn.net/account/register" target="_top">注册</a>|<a href="https://passport.csdn.net/help/faq" target="_blank">帮助</a></p><ul>
+<li><a href="http://www.csdn.net/" target="_blank">首页</a></li>
+<li><a href="http://news.csdn.net/" target="_blank">业界</a></li>
+<li><a href="http://mobile.csdn.net/" target="_blank">移动</a></li>
+<li><a href="http://cloud.csdn.net/" target="_blank">云计算</a></li>
+<li><a href="http://sd.csdn.net/" target="_blank">研发</a></li>
+<li><a href="http://bbs.csdn.net/" target="_blank">论坛</a></li>
+<li><a href="http://blog.csdn.net/" target="_blank">博客</a></li>
+<li><a href="http://download.csdn.net/" target="_blank">下载</a></li>
+<li class="more"><h2 id="topnav_btnmore" onclick="showNavMore(this)"><a href="javascript:void(0);">更多</a></h2>
+<div id="topnav_hidlist">
+<iframe name="nav_frm" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/a.htm" frameborder="no" height="178" scrolling="no" width="92"></iframe>
+</div>
+</li>
+</ul>
+</div>
+
+
+<div id="container">
+<div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h1><a href="http://blog.csdn.net/oncoding">Guixue</a></h1>
+            <h2>——oncoding</h2>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg"></div>
+    <div class="navigator">
+        <ul>
+            <li id="btnContents"><a href="http://blog.csdn.net/oncoding?viewmode=contents"><span><img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ico_list.gif">目录视图</span></a></li>
+            <li id="btnView"><a href="http://blog.csdn.net/oncoding?viewmode=list"><span><img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ico_summary.gif">摘要视图</span></a></li>
+            <li id="btnRss"><a href="http://blog.csdn.net/oncoding/rss/list"><span><img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ico_rss.gif">订阅</span></a></li>
+</ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "oncoding";
+    var blog_address = "http://blog.csdn.net/oncoding";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";
+</script>
+        
+<div id="body">
+<div id="main">
+<div class="main">
+<div class="notice"> 
+
+<a href="http://surveies.csdn.net/survey/comein/532" target="_blank">
+<font color="blue">博客专家信息更新登记表   </font></a>
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://www.csdn.net/article/2013-03-12/2814461" target="_blank"><font color="red">专访卜茂霞：嵌入式汽车开发潜力巨大
+</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://bbs.csdn.net/topics/390373496" target="_blank"><font color="red">CSDN社区程序员回乡见闻活动火爆开始！
+
+</font></a>
+
+<br>
+
+
+
+
+
+<a href="http://www.csdn.net/article/2013-03-05/2814348" target="_blank">
+<font color="red">专访陈勇： 敏捷开发现状及发展之路
+
+ </font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://huiyi.csdn.net/tech/view/223" target="_blank">
+<font color="red">“传统商家移动化之路”会议
+ </font></a>
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/csdnstudent/article/details/8077932" target="_blank">
+<font color="red">2013年全国百所高校巡讲讲师招募  </font></a>
+
+
+</div><div id="article_details" class="details">
+    <div class="article_title">
+    <span class="ico ico_type_Original"></span>
+    <h3>
+        <span class="link_title"><a href="http://blog.csdn.net/oncoding/article/details/3344378">
+        关于帧间距 IFG技术的讨论
+        </a></span>
+    </h3>
+</div>
+
+        
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="http://blog.csdn.net/oncoding/article/category/486855">embedded linux</a> 
+        </span>
+    <span class="link_postdate">2008-11-21 10:10</span>
+    <span class="link_view" title="阅读次数">2193人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="#comments">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:collectArticle('关于帧间距 IFG技术的讨论','3344378');return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="#report" onclick="javascript:report(3344378,2);return false;" title="举报">举报</a></span>
+    
+</div>
+<div class="tag2box"><a href="http://blog.csdn.net/tag/details.html?tag=%e5%b7%a5%e4%bd%9c" target="_blank">工作</a><a href="http://blog.csdn.net/tag/details.html?tag=%e6%b5%8b%e8%af%95" target="_blank">测试</a><a href="http://blog.csdn.net/tag/details.html?tag=%e7%bd%91%e7%bb%9c" target="_blank">网络</a><a href="http://blog.csdn.net/tag/details.html?tag=c" target="_blank">c</a></div>
+
+
+    
+<div id="article_content" class="article_content">
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US">1.</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">什么是<span lang="EN-US"> IFG</span>？（<span lang="EN-US">What</span>）<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US">IFG(Interframe
+Gap),</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">帧间距，以太网相邻两帧之间的时间断；以太网发送方式是一个帧一个帧发送的，帧与帧之间需要间隙，即帧间距<span lang="EN-US">IFG</span>也可称其为<span lang="EN-US">IPG (Interpacket Gap)</span>。<span lang="EN-US">IFG</span>指的是一段时间，不是距离，单位通常用微秒（μ<span lang="EN-US">s</span>）或纳秒（<span lang="EN-US">ns</span>）。如下图所示：<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/11.gif" alt="ifg" align="middle"><br></p><p class="MsoNormal" style="text-align:center" align="center"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">图</span><span lang="EN-US"> 1 </span><span style="font-family:
+宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">帧间距</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US">2.</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">为什么需要<span lang="EN-US">IFG</span>？（<span lang="EN-US">Why</span>）<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;
+font-family:&quot;YaHei Consolas Hybrid&quot;">网络设备和组件在接收一个帧之后，需要一段短暂的时间来恢复并为接收下一帧做准备。<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US">3.IFG</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">的大小为多少？（<span lang="EN-US">Importance</span>）<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US">IFG</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">的最小值是<span lang="EN-US"> 96 bit time</span>，即在媒介中发送<span lang="EN-US">96</span>位原始数据所需要的时间，在不同媒介中<span lang="EN-US">IFG</span>的最小值是不一样的：<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoAutoSig" style="text-align:left" align="left"><span style="font-size:
+12.0pt;font-family:宋体;color:black;mso-fareast-language:ZH-CN;mso-no-proof:yes">不管<span lang="EN-US"> <st1:chmetcnv tcsc="0" numbertype="1" negative="False" hasspace="False" sourcevalue="10" unitname="m" w:st="on">10M</st1:chmetcnv>/<st1:chmetcnv tcsc="0" numbertype="1" negative="False" hasspace="False" sourcevalue="100" unitname="m" w:st="on">100M</st1:chmetcnv>/<st1:chmetcnv tcsc="0" numbertype="1" negative="False" hasspace="False" sourcevalue="1000" unitname="m" w:st="on">1000M</st1:chmetcnv></span>的以太网，两帧之间最少要有<span lang="EN-US">96bit</span>；</span><span style="font-size:12.0pt;
+font-family:宋体;mso-fareast-language:ZH-CN;mso-no-proof:yes" lang="EN-US">IFG<sub><span style="color:red">min</span></sub>=96bit/speed<span style="mso-spacerun:yes">&nbsp;&nbsp;
+</span>(s)<o:p></o:p></span></p>
+
+<p class="MsoAutoSig" style="text-align:left" align="left"><span style="font-size:
+12.0pt;font-family:宋体;mso-fareast-language:ZH-CN;mso-no-proof:yes">则：<span lang="EN-US">10M<sub><span style="color:red">min</span></sub>: <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>9600 ns<o:p></o:p></span></span></p>
+
+<p class="MsoAutoSig" style="text-align:left" align="left"><span style="font-size:12.0pt;font-family:宋体;mso-fareast-language:ZH-CN;mso-no-proof:
+yes" lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-size:12.0pt;font-family:宋体;mso-ansi-language:FR;mso-fareast-language:
+ZH-CN;mso-no-proof:yes" lang="FR">100M<sub><span style="color:red">min</span></sub>: <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>960 ns<span style="mso-tab-count:1"> </span><o:p></o:p></span></p>
+
+<p class="MsoAutoSig" style="text-align:left;text-indent:21.0pt" align="left"><span style="font-size:12.0pt;font-family:宋体;mso-ansi-language:FR;mso-fareast-language:
+ZH-CN;mso-no-proof:yes" lang="FR">1000M<sub><span style="color:red">min</span></sub>:<span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>96 ns<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;;
+mso-ansi-language:FR" lang="FR">4.</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">如何使用</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;;mso-ansi-language:
+FR" lang="FR">IFG</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;;
+mso-ansi-language:FR">？（<span lang="FR">How</span>）<span lang="FR"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">举个具体例子说明，<span lang="EN-US">IFG</span>在以太网的流控机制中解决速度匹配问题；<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:12.0pt;
+font-family:&quot;YaHei Consolas Hybrid&quot;">这里涉及到以太网的流控机制，如下图：</span></p><p class="MsoNormal" style="text-indent:21.0pt"><img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/22.gif" alt="以太网传输示例" align="middle"><span class="Apple-style-span" style="font-family: 'YaHei Consolas Hybrid';"><br></span></p>
+
+<p class="MsoNormal" style="text-align:center" align="center"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">图</span><span lang="EN-US"> 2</span><span style="font-family:
+宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">以太网传输示例</span></p>
+
+<p class="MsoNormal" style="text-indent:21.0pt"><span style="font-size:9.0pt;color:#010101" lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="margin-left:21.0pt;text-indent:-21.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 21.0pt"><span style="font-size:
+12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;;mso-bidi-font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US"><span style="mso-list:Ignore">1)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">设备<span lang="EN-US">1</span>以其自身的工作时钟<span lang="EN-US">(OSC1) </span>向设备<span lang="EN-US">2</span>发送到待发数据；<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="margin-left:21.0pt;text-indent:-21.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 21.0pt"><span style="font-size:
+12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;;mso-bidi-font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US"><span style="mso-list:Ignore">2)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">数据包进入设备<span lang="EN-US">2</span>：<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="margin-left:42.0pt;text-indent:-21.0pt;mso-list:l0 level2 lfo1;
+tab-stops:list 42.0pt"><span style="font-size:
+12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;;mso-bidi-font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US"><span style="mso-list:Ignore">a)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">经过时钟数据恢复器（<span lang="EN-US">CDR</span>）的处理，从数据中提取时钟，并基于提取的时钟（<span lang="EN-US">CLK2</span>），将数据包存入接收缓存，此时，<span lang="EN-US">CLK2</span>和<span lang="EN-US">OSC1</span>是同步的；<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="margin-left:42.0pt;text-indent:-21.0pt;mso-list:l0 level2 lfo1;
+tab-stops:list 42.0pt"><span style="font-size:
+12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;;mso-bidi-font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US"><span style="mso-list:Ignore">b)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">数据从接收缓存，经过上层协议的处理，存入发送缓存；<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal" style="margin-left:21.0pt;text-indent:-21.0pt;mso-list:l0 level1 lfo1;
+tab-stops:list 21.0pt"><span style="font-size:
+12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;;mso-bidi-font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US"><span style="mso-list:Ignore">3)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">发送缓存以设备<span lang="EN-US">2</span>的工作时钟<span lang="EN-US">(OSC2)</span>发送数据，由于以太网是异步工作的，故<span lang="EN-US">OSC1</span>和<span lang="EN-US">OSC2</span>作为不同设备的本地时钟，并不能做到完全同频<span lang="EN-US">(</span>以太网设备的工作时钟允许有正负<span lang="EN-US">50ppm</span>的频差<span lang="EN-US">)</span>，上图假设<span lang="EN-US">OSC1</span>大于<span lang="EN-US">OSC2</span>，那么设备<span lang="EN-US">2</span>的接收的速度将大于发送的速度，如果接收缓冲满了，将造成丢包；<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">如何解决上述丢包问题？<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">在设备<span lang="EN-US">2</span>的发送侧通过减小<span lang="EN-US">IFG(</span>帧间距<span lang="EN-US">)</span>来加快其发送有效数据包的速度，从而使得发送速度能跟上接收速度。<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US">5.IFG</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">在我们实际工作的应用？<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">这里主要提到<span lang="EN-US">Smartbit <st1:chmetcnv tcsc="0" numbertype="1" negative="False" hasspace="False" sourcevalue="6000" unitname="C" w:st="on">6000C</st1:chmetcnv>
+</span>在产测中的使用。<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">使用原理：<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US">IFG</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">增大，设备的有效速度减小，可以解决因速度过快丢包的问题；<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;" lang="EN-US">IFG</span><span style="font-size:12.0pt;font-family:&quot;YaHei Consolas Hybrid&quot;">减小（但必须大于<span lang="EN-US"> 96 bit time</span>），设备的有效速度增大，可以解决因速度过慢导致测试超时的问题。<span lang="EN-US"><o:p></o:p></span></span></p>
+
+<p class="MsoNormal"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">参考资料：</span></p>
+
+<p class="MsoNormal"><span lang="EN-US">[1] </span><span style="font-family:宋体;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">以太网流控机制及其基于</span><span lang="EN-US">VSC7323</span><span style="font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">的实现</span><span lang="EN-US">. <a href="http://tech.c114.net/169/a266942.html">http://tech.c114.net/169/a266942.html</a></span></p>
+
+<p class="MsoNormal"><span lang="EN-US">[2] Interframe gap Wikipedia. <a href="http://en.wikipedia.org/wiki/Interframe_gap">http://en.wikipedia.org/wiki/Interframe_gap</a></span></p>
+
+<p class="MsoNormal"><span lang="EN-US">[3] thernet .http://www.cisco.com/en/US/docs/internetworking/technology/handbook/Ethernet.pdf</span></p>
+
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+<div class="share_buttons" id="sharePanel"><span>分享到：</span> <a name="sina" class="share_sina" title="分享到新浪微博"></a><a name="qq" class="share_qq" title="分享到腾讯微博"></a></div>
+<!--192.168.1.237-->
+<div class="article_next_prev">
+    <li class="prev_article"><span>上一篇：</span><a href="http://blog.csdn.net/oncoding/article/details/3339377">XP下如何给装有 ubuntu的虚拟机 磁盘扩容</a></li>
+    <li class="next_article"><span>下一篇：</span><a href="http://blog.csdn.net/oncoding/article/details/3748411">又遇 django 中文编码问题</a></li>
+</div>
+
+
+    
+</div>
+<div id="ad_cen"><iframe src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ad.htm" style="border-width: 0px; overflow: hidden; width: 732px; height: 92px;" id="ad_frm_0" frameborder="0" scrolling="no"></iframe></div>
+<script type="text/javascript">
+    new Ad(4, 'ad_cen');
+</script>
+<div id="comment_title" class="panel_head">查看评论<a name="comments"></a></div>
+<div id="comment_list"><br>&nbsp;&nbsp;暂无评论<br><br><div class="clear"></div></div>
+<div id="comment_bar"></div>
+<div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:csdn.showLogin(function (dat) {js_logined(dat.data.userName);});">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Foncoding%2Farticle%2Fdetails%2F3344378">[注册]</a></div></div>
+<div class="announce">* 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+<script type="text/javascript">
+    var fileName = '3344378';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/comment.js"></script>
+<div id="ad_bot"><iframe src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ad_002.htm" style="border-width: 0px; overflow: hidden; width: 732px; height: 170px;" id="ad_frm_1" frameborder="0" scrolling="no"></iframe></div>
+<script type="text/javascript">
+    new Ad(5, 'ad_bot');
+</script>
+<div id="report_dialog"></div>
+
+<div id="d-top" style="display: none;">
+<a id="d-top-a" href="#" title="回到顶部">
+<img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/top.png" alt="TOP"></a>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var d_top=$('#d-top');
+        document.onscroll=function(){
+            var scrTop=(document.body.scrollTop||document.documentElement.scrollTop);
+            if(scrTop>500){
+                d_top.show();
+            }else{
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function(){
+            scrollTo(0,0);
+            this.blur();
+            return false;
+        });
+    });
+</script>
+
+
+
+<div class="clear"></div>
+</div>
+</div>
+
+<div id="side">
+<div class="side">
+<div id="panel_Profile" class="panel">
+    <ul class="panel_head"><span>个人资料</span></ul>
+    <ul class="panel_body profile">
+        <div id="blog_userface">
+            <a href="http://my.csdn.net/oncoding" target="_blank">
+            <img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/1_oncoding.jpg" title="访问我的空间" style="max-width:90%">
+            </a>
+            <br>
+            <span><a href="http://my.csdn.net/oncoding" class="user_name" target="_blank">oncoding</a></span>
+        </div>
+<div class="interact">
+<!--<a href="#" class="attented" title="已关注"></a>-->
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+<a href="javascript:void(0);" class="letter" onclick="loginto(1)" title="[发私信]"></a>
+</div>
+        <div id="blog_medal">
+        <div id="bms_box"></div></div>
+        <ul id="blog_rank">
+            <li>访问：<span>85231次</span></li>
+            <li>积分：<span>1612分</span></li>
+            <li>排名：<span>第4948名</span></li>
+        </ul>
+        <ul id="blog_statistics">
+            <li>原创：<span>50篇</span></li>
+            <li>转载：<span>26篇</span></li>
+            <li>译文：<span>7篇</span></li>
+            <li>评论：<span>68条</span></li>
+        </ul>
+    </ul>
+</div>
+<script type="text/javascript">
+    var _blogger = 'oncoding';
+</script>
+
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" class="blogsearch" title="请输入关键字" type="text"></span>
+        <input id="btnSubmit" value="搜索" title="search in blog" type="submit">
+        <input name="q" id="inputQ" type="hidden">
+        <input name="t" value="blog" type="hidden">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div><div id="panel_Category" class="panel">
+    <ul class="panel_head"><span>文章分类</span></ul>
+    <ul class="panel_body">
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/400330">C/C++学习</a><span>(17)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/486855">embedded linux</a><span>(2)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/794445">Javascript</a><span>(3)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/540470">Lua</a><span>(4)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/565193">mips</a><span>(1)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/506619">python</a><span>(5)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/546717">琐事</a><span>(4)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/427369">编程感悟</a><span>(6)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/566549">网络协议</a><span>(2)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/877955">移动</a><span>(1)</span>
+        </li>
+        <li>
+        <a href="http://blog.csdn.net/oncoding/article/category/1271369">Agile</a><span>(1)</span>
+        </li>
+    </ul>
+</div><div id="panel_Archive" class="panel">
+    <ul class="panel_head"><span>文章存档</span></ul>
+    <ul class="panel_body">
+        <div id="archive_list"><li><a href="http://blog.csdn.net/oncoding/article/month/2012/11">2012年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2011/08">2011年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2011/03">2011年03月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2010/11">2010年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2010/07">2010年07月</a><span>(1)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/oncoding/article/month/2010/04">2010年04月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2010/03">2010年03月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2010/01">2010年01月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2009/09">2009年09月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2009/08">2009年08月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2009/07">2009年07月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2009/05">2009年05月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2009/04">2009年04月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2009/02">2009年02月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2009/01">2009年01月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2008/11">2008年11月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2008/09">2008年09月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2008/08">2008年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2008/07">2008年07月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2008/05">2008年05月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2008/04">2008年04月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2008/03">2008年03月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2008/01">2008年01月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2007/11">2007年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2007/10">2007年10月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2007/08">2007年08月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/oncoding/article/month/2007/05">2007年05月</a><span>(2)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+    </ul>
+</div>
+<div id="hotarticls" class="panel">
+    <ul class="panel_head"><span>阅读排行</span></ul>
+    <ul class="panel_body itemlist">
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/4365062" title="SSH 协议基础">SSH 协议基础</a><span>(8556)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/1835976" title="孙鑫 VC++从入门到精通 视频教程flash 下载">孙鑫 VC++从入门到精通 视频教程flash 下载</a><span>(8369)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/4105832" title="如何阅读源代码">如何阅读源代码</a><span>(5093)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/2294051" title="CodeSmith 4.1.2 破解">CodeSmith 4.1.2 破解</a><span>(5025)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/1757977" title="编码格式转换--url编码与解码">编码格式转换--url编码与解码</a><span>(2753)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/4335805" title="《我的团长我的团》：你要让我来啊，那个犊子不愿意来呀！">《我的团长我的团》：你要让我来啊，那个犊子不愿意来呀！</a><span>(2576)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/4324421" title="C单元测试框架——CMockery (3)中文手册">C单元测试框架——CMockery (3)中文手册</a><span>(2350)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/3873967" title="python .com 少儿不宜">python .com 少儿不宜</a><span>(2314)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/3344378" title="关于帧间距 IFG技术的讨论">关于帧间距 IFG技术的讨论</a><span>(2193)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/4346531" title="mips汇编简单实例——一个小计算器">mips汇编简单实例——一个小计算器</a><span>(2039)</span>
+        </li>
+    </ul>
+</div>
+<div id="hotarticls2" class="panel">
+    <ul class="panel_head"><span>评论排行</span></ul>
+    <ul class="panel_body itemlist">
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/4105832" title="如何阅读源代码">如何阅读源代码</a><span>(16)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/2294051" title="CodeSmith 4.1.2 破解">CodeSmith 4.1.2 破解</a><span>(7)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/1835976" title="孙鑫 VC++从入门到精通 视频教程flash 下载">孙鑫 VC++从入门到精通 视频教程flash 下载</a><span>(7)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/4434315" title="也谈如何高效阅读源码">也谈如何高效阅读源码</a><span>(7)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/3873967" title="python .com 少儿不宜">python .com 少儿不宜</a><span>(5)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/2480499" title="仿迅雷，ie中右键单击下载 vc实现方法">仿迅雷，ie中右键单击下载 vc实现方法</a><span>(4)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/5128721" title="C语言预处理运算符">C语言预处理运算符</a><span>(4)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/4365062" title="SSH 协议基础">SSH 协议基础</a><span>(3)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/2925642" title="C++程序员必需的修养">C++程序员必需的修养</a><span>(2)</span>
+        </li>
+        <li>
+            <a href="http://blog.csdn.net/oncoding/article/details/3748411" title="又遇 django 中文编码问题">又遇 django 中文编码问题</a><span>(2)</span>
+        </li>
+    </ul>
+</div>
+<div id="homepageArticles" class="panel">
+    <ul class="panel_head"><span>推荐文章</span></ul>
+    <ul class="panel_body" id="ad_commend">
+    <iframe src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ad_003.htm" style="border-width: 0px; overflow: hidden; width: 182px; height: 272px;" id="ad_frm_2" frameborder="0" scrolling="no"></iframe></ul>
+</div>
+<script type="text/javascript">
+    new Ad(12, 'ad_commend');
+</script><div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/4105832#comments">如何阅读源代码</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/oldrat" class="user_name">oldrat</a>:
+强劲！
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/2295161#comments">VC中使用SkinMagic给你的软件换肤 </a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/youmingke" class="user_name">youmingke</a>:
+为何失败了，出现了如下链接失败信息，LINK : fatal error LNK1104: cann...
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/4105832#comments">如何阅读源代码</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/aidejiushimi5201314" class="user_name">aidejiushimi5201314</a>:
+顶顶顶，面对这么多的代码，我都不知道从哪里看起了，谢谢
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/2294051#comments">CodeSmith 4.1.2 破解</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/mide_c" class="user_name">mide_c</a>:
+非常感谢！！~
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/5128721#comments">C语言预处理运算符</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/ranmori" class="user_name">ranmori</a>:
+不错，学习了。以前还真没太注意预处理的运算符。这几天看中断处理函数的时候才发现原来预处理还有运算符的...
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/4105832#comments">如何阅读源代码</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/shuqin1984" class="user_name">影儿</a>:
+很明显， 赞一个！~~~ 慢慢消化
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/5128721#comments">C语言预处理运算符</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/h_askfor" class="user_name">h_askfor</a>:
+总结的不错，也是以前在书上了解过一点
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/4434315#comments">也谈如何高效阅读源码</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/corehu" class="user_name">corehu</a>:
+太棒了！最近读源码很头疼，看了博主的文章有所启发！
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/3873967#comments">python .com 少儿不宜</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/mufenmu" class="user_name">mufenmu</a>:
+登不上去，求真相
+    </p>
+    </li>
+    <li>
+    <a href="http://blog.csdn.net/oncoding/article/details/5128721#comments">C语言预处理运算符</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/syda763" class="user_name">syda763</a>:
+以前还真不知道#的用法，又涨见识了。
+    </p>
+    </li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+</div>
+
+<script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/newblog.js"></script>
+<script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/showblogmedal.js"></script>
+
+<script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/publib_footer.js"></script><link rel="stylesheet" type="text/css" href="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/pub_footer_2012.css"><div class="pub_footerall"><dl><dt></dt> <dd><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a>|<a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a>|<a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a>|<a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a>|<a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a>|<a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a>|<a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a>|<a href="mailto:webmaster@csdn.net">问题报告</a></dd><dd>京&nbsp;ICP&nbsp;证&nbsp;070598&nbsp;号</dd><dd>北京创新乐知信息技术有限公司 版权所有</dd><dd>世纪乐知(北京)网络技术有限公司 提供技术支持</dd><dd>江苏乐知网络技术有限公司 提供商务支持</dd><dd><img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ico_email.gif" alt="" title=""> 联系邮箱：webmaster(at)csdn.net</dd><dd>Copyright © 1999-2012, CSDN.NET, All Rights Reserved&nbsp;<a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div><script type="text/javascript" charset="utf-8" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/tracking.js"></script>
+
+<script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/pv.txt" border="0" height="0" width="0">
+<script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/msg.js"></script>
+
+
+<script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ad-blog.js"></script><script type="text/javascript" src="%E5%85%B3%E4%BA%8E%E5%B8%A7%E9%97%B4%E8%B7%9DIFG%E6%8A%80%E6%9C%AF%E7%9A%84%E8%AE%A8%E8%AE%BA_files/ad-ms471.js"></script>
+
+</div>
+
+</body></html>
